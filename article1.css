@@ -1,0 +1,101 @@
+.jacquard-12-regular {
+    font-family: "Jacquard 12", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* general font + background */
+body {
+    font-family: "Jacquard 12", system-ui;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-size: 25px;
+    display: grid;
+    grid-template-columns: 1fr minmax(600px, 3fr) 1fr;
+    grid-template-rows: auto 1fr auto;
+    background-image: url('https://i.redd.it/yqx4nd5l3tba1.gif');
+    background-size: 150px 100px;
+
+}
+
+/*
+body::before {
+    background-image: url('https://i.redd.it/yqx4nd5l3tba1.gif');
+}
+
+Right gutter
+body::after {
+    content: "";
+    grid-column: 3;
+    grid-row: 1 / -1;
+    background: repeating-conic-gradient(
+        #f2f2f2 0deg 90deg, 
+        #919191 90deg 180deg,
+        #767676 180deg 270deg,
+        #cccccc 270deg 360deg
+    );
+    background-size: 40px 40px;
+    opacity: 0.5;
+}
+*/
+
+/* Make sure main stays on top */
+main {
+    grid-column: 2;
+    padding: 40px 60px;
+    background: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 1;
+}
+
+/* Date */
+.date {
+    text-align: right;
+    font-size: 1.2em;
+}
+
+/* Greeting */
+.greeting {
+    font-style: italic;
+    font-size: 80px;
+}
+
+/* Body paragraphs */
+.letter-body {
+    line-height: 1.6;
+    text-align: justify;
+    display: grid;
+    gap: 15px;
+}
+
+/* Multimedia section */
+.media {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+.media img, .media video, .media audio, .media iframe {
+    max-width: 100%;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Signature */
+#SignOff {
+    text-align: right;
+    margin-top: 30px;
+}
+
+/* Citation */
+#citation {
+    font-size: 14px;
+    text-align: center;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+    color: #444;
+}

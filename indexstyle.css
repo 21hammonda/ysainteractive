@@ -1,0 +1,152 @@
+.rubik-broken-fax-regular {
+    font-family: "Rubik Broken Fax", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}  
+
+.jacquard-12-regular {
+    font-family: "Jacquard 12", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+#modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    font-family: "Jacquard 12", system-ui;
+}
+
+#choose {
+    font-size: 2em;
+    letter-spacing: 10px;
+    text-align: center;
+}
+
+.char {
+    color: white;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.selected {
+    color: red;
+    transform: scale(1.4);
+}
+
+#main-content {
+    display: none; /* Hidden until character is selected */
+    padding: 20px;
+    font-family: "Jacquard 12", system-ui;
+}
+
+.wrapper {
+    border: 8px solid #d26822;
+    border-radius: 5px;
+    background-image: url("tapestry.jpg");
+    background-repeat: repeat; /* This tiles the image */
+}
+
+.box1 {
+    border: 12px solid #ffa94d;
+    border-radius: 5px;
+    background-color: #ffd8a8;
+    padding: 1em;
+    color: #b03f12;
+    margin: 20px;
+    filter: drop-shadow(5px 0px 5px #222); /*Horizontal, vertical, blur radius*/
+}
+
+.box2 {
+    border: 12px solid #ffa94d;
+    border-radius: 5px;
+    background-color: #ffd8a8;
+    padding: 1em;
+    color: #d9480f;
+    margin: 20px;
+    filter: drop-shadow(5px 0px 5px #222); /*Horizontal, vertical, blur radius*/
+}
+
+.box3 {
+    border: 12px solid #ffa94d;
+    border-radius: 5px;
+    background-color: #ffd8a8;
+    padding: 1em;
+    color: #d9480f;
+    margin: 20px;
+    filter: drop-shadow(5px 0px 5px #222); /*Horizontal, vertical, blur radius*/
+}
+
+.box4 {
+    position: absolute;
+    top: 165px;
+    left: 750px;
+    filter: drop-shadow(5px 0px 5px #222); /*Horizontal, vertical, blur radius*/
+}
+
+
+body {
+    background-color: rgba(154, 190, 196);
+}
+
+.image-99vw {
+    width: 99vw;
+    height: auto; /* To maintain the image's aspect ratio */
+  }
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    width: 99vw;
+    margin-top: 15px;
+}
+
+.box-1 {
+    grid-row: 1;
+    grid-column: 1;
+    z-index: 1; /* This box will be underneath box-2 */
+}
+
+.box-2 {
+    grid-row: 1;
+    grid-column: 1;
+    z-index: 2; /* This box will be on top */
+}
+
+#pane {
+    position: relative;
+    border: 8px solid #d26822;
+    border-radius: 5px;
+}
+  
+#box {
+    position: absolute;
+    top: 140px;
+    left: 140px;
+    width: 70px;
+    height: 70px;
+    background-color: transparent; /* Remove black background */
+    font-family: 'Jacquard 12', sans-serif; /* or 'Rubik Broken Fax' */
+    font-size: 65px;
+    color: black;
+    text-align: center;
+    line-height: 20px;
+    font-weight: bold;
+  }
+
+#instructions {
+    font-family: 'Jacquard 12', sans-serif;
+    color: black;
+    text-align: center;
+    font-size: 30px;
+    margin: 30px;
+}
