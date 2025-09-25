@@ -1,3 +1,4 @@
+/* ---------------- Fonts ---------------- */
 .rubik-broken-fax-regular {
     font-family: "Rubik Broken Fax", system-ui;
     font-weight: 400;
@@ -10,6 +11,7 @@
     font-style: normal;
 }
 
+/* ---------------- Modal ---------------- */
 #modal {
     position: fixed;
     top: 0;
@@ -42,9 +44,81 @@
     transform: scale(1.4);
 }
 
+/* ---------------- Scroll Menu ---------------- */
+.scroll-menu {
+    position: relative;       /* stays in normal flow at the very top */
+    width: 100%;
+    text-align: center;       /* center the wrapper horizontally */
+    z-index: 1000;
+}
+
+.scroll-wrapper {
+    position: relative;
+    display: block;           /* full width so the nav can span */
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Closed scroll — small and centered */
+.scroll.closed {
+    display: block;
+    height: 150px;            /* adjust as needed */
+    width: auto;
+    margin: 0 auto;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+/* Open scroll — expands almost full screen */
+.scroll.open {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 150px;            /* match closed scroll height */
+    width: 98vw;              /* almost full screen */
+    max-width: 98vw;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+/* Menu links */
+.menu-links {
+    position: absolute;
+    top: 50%;                 /* vertically center on the scroll */
+    transform: translateY(-50%);
+    left: 1vw;
+    right: 1vw;               /* ~98vw total width */
+    display: flex;
+    flex-wrap: nowrap;        /* single line only */
+    justify-content: space-between;
+    align-items: center;
+    gap: 0;                   /* spacing handled by flex widths */
+    white-space: nowrap;      /* prevent line breaks */
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    font-family: 'Jacquard 12', cursive;
+    font-size: clamp(0.95rem, 1.2vw, 1.25rem);
+}
+
+.menu-links a {
+    flex: 1 1 0;             /* equal columns across the row */
+    text-align: center;
+    padding: 0 .5rem;
+    color: #3b2a1a;
+    text-decoration: none;
+}
+
+/* Hover effect */
+.scroll-wrapper:hover .closed { opacity: 0; }
+.scroll-wrapper:hover .open   { opacity: 1; }
+.scroll-wrapper:hover .menu-links { opacity: 1; }
+
+/* ---------------- Page Layout ---------------- */
 #main-content {
-    display: none; /* Hidden until character is selected */
+    display: none;            /* hidden until character selection */
     padding: 20px;
+    margin-top: 170px;        /* push content below scroll bar */
     font-family: "Jacquard 12", system-ui;
 }
 
@@ -52,7 +126,7 @@
     border: 8px solid #d26822;
     border-radius: 5px;
     background-image: url("tapestry.jpg");
-    background-repeat: repeat; /* This tiles the image */
+    background-repeat: repeat;
 }
 
 .box1 {
@@ -62,7 +136,7 @@
     padding: 1em;
     color: #b03f12;
     margin: 20px;
-    filter: drop-shadow(5px 0px 5px #222); /*Horizontal, vertical, blur radius*/
+    filter: drop-shadow(5px 0px 5px #222);
 }
 
 .box2 {
@@ -72,7 +146,7 @@
     padding: 1em;
     color: #d9480f;
     margin: 20px;
-    filter: drop-shadow(5px 0px 5px #222); /*Horizontal, vertical, blur radius*/
+    filter: drop-shadow(5px 0px 5px #222);
 }
 
 .box3 {
@@ -82,25 +156,25 @@
     padding: 1em;
     color: #d9480f;
     margin: 20px;
-    filter: drop-shadow(5px 0px 5px #222); /*Horizontal, vertical, blur radius*/
+    filter: drop-shadow(5px 0px 5px #222);
 }
 
 .box4 {
     position: absolute;
     top: 165px;
     left: 750px;
-    filter: drop-shadow(5px 0px 5px #222); /*Horizontal, vertical, blur radius*/
+    filter: drop-shadow(5px 0px 5px #222);
 }
 
-
 body {
+    margin: 0;
     background-color: rgba(154, 190, 196);
 }
 
 .image-99vw {
     width: 99vw;
-    height: auto; /* To maintain the image's aspect ratio */
-  }
+    height: auto;
+}
 
 .grid-container {
     display: grid;
@@ -113,13 +187,13 @@ body {
 .box-1 {
     grid-row: 1;
     grid-column: 1;
-    z-index: 1; /* This box will be underneath box-2 */
+    z-index: 1;
 }
 
 .box-2 {
     grid-row: 1;
     grid-column: 1;
-    z-index: 2; /* This box will be on top */
+    z-index: 2;
 }
 
 #pane {
@@ -134,14 +208,14 @@ body {
     left: 140px;
     width: 70px;
     height: 70px;
-    background-color: transparent; /* Remove black background */
-    font-family: 'Jacquard 12', sans-serif; /* or 'Rubik Broken Fax' */
+    background-color: transparent;
+    font-family: 'Jacquard 12', sans-serif;
     font-size: 65px;
     color: black;
     text-align: center;
     line-height: 20px;
     font-weight: bold;
-  }
+}
 
 #instructions {
     font-family: 'Jacquard 12', sans-serif;

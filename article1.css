@@ -4,6 +4,87 @@
     font-style: normal;
 }
 
+/* -------- Scroll Menu -------- */
+.scroll-menu {
+    grid-column: 1 / -1;   /* make header span all grid columns */
+  }
+  
+  .scroll-wrapper {
+    position: relative;
+    display: block;           /* full width so nav can span */
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  /* Closed scroll (default) */
+  .scroll.closed {
+    display: block;
+    height: 150px;            /* adjust height to your design */
+    width: auto;
+    margin: 0 auto;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+  
+  /* Open scroll on hover */
+  .scroll.open {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 150px;
+    width: 98vw;
+    max-width: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  
+  /* Nav links on top of the open scroll */
+  .menu-links {
+    position: absolute;
+    top: 50%;                     /* vertical center */
+    transform: translateY(-50%);
+    left: 1vw;
+    right: 1vw;
+    display: flex;
+    flex-wrap: nowrap;            /* single line only */
+    justify-content: space-between;
+    align-items: center;
+    white-space: nowrap;          /* prevent wrapping */
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    font-family: 'Jacquard 12', cursive;
+    font-size: clamp(0.95rem, 1.2vw, 1.25rem);
+  }
+  
+  .menu-links a {
+    flex: 1 1 0;                  /* equal width columns */
+    text-align: center;
+    padding: 0 .5rem;
+    color: #3b2a1a;
+    text-decoration: none;
+  }
+  
+  /* Hover reveal */
+  .scroll-wrapper:hover .closed { opacity: 0; }
+  .scroll-wrapper:hover .open   { opacity: 1; }
+  .scroll-wrapper:hover .menu-links { opacity: 1; }
+  
+  /* Push page content below the scroll bar */
+  main {
+    margin-top: 170px;            /* matches scroll height */
+  }
+  
+  /* Optional: shrink fonts on small screens
+  @media (max-width: 600px) {
+    .scroll.closed, .scroll.open { height: 120px; }
+    .menu-links { font-size: clamp(0.85rem, 2.5vw, 1rem); }
+    .menu-links a { padding: 0 .35rem; }
+  }
+  
+ */
+
+
 /* general font + background */
 body {
     font-family: "Jacquard 12", system-ui;
