@@ -1,0 +1,127 @@
+/* ===== General ===== */
+body {
+  margin: 0;
+  font-family: "Special Elite", monospace;
+  background: #bcd2e8; /* sky blue */
+  overflow-x: hidden;
+  font-size: 10px;
+}
+
+/* ===== HEADER CLOUD NAV ===== */
+.cloud-header {
+  background: #bcd2e8;
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.cloud-header nav {
+  display: flex;
+  gap: 30px;
+}
+
+.cloud-header .cloud {
+  background: #fff;
+  padding: 10px 25px;
+  border-radius: 50px;
+  text-decoration: none;
+  color: #333;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  animation: bob 4s ease-in-out infinite;
+}
+
+.cloud-header .cloud:nth-child(even) { animation-delay: 1s; }
+.cloud-header .cloud:nth-child(odd)  { animation-delay: 2s; }
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+
+/* ===== SKY & PLANE ===== */
+.sky {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(#bcd2e8 60%, #a5c4df);
+  overflow: hidden;
+  padding: 60px 0;
+}
+
+.plane {
+  position: fixed;                    /* stays on screen while scrolling */
+  top: 40%;                           /* start near middle of viewport */
+  left: 50%;                          /* centered horizontally */
+  width: 180px;
+  height: 120px;
+  background: url('plane.png') no-repeat center/contain;
+  z-index: 10;                        /* above the cloud rows */
+  transform: translate(-50%, -50%);   /* center based on top/left */
+}
+
+@keyframes floatPlane {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-15px); }
+}
+
+/* ===== CLOUD ROWS ===== */
+/* ===== CLOUD ROWS ===== */
+.cloud-row {
+  position: relative;
+  overflow: hidden;    /* keep extra clouds clipped */
+  margin: 60px 0;
+}
+
+/* The inner track that slides */
+.cloud-track {
+  display: flex;
+  gap: 40px;
+  animation: scrollLoop 60s linear infinite;
+  align-items: flex-start;
+}
+
+/* Make each paragraph a real "cloud" */
+.paragraph-cloud {
+  flex: 0 0 auto;           /* don’t shrink */
+  display: block;
+  white-space: normal;
+  width: clamp(320px, 40vw, 460px);
+  background: #fff;
+  padding: 25px 35px;
+  border-radius: 40px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  line-height: 1.6;
+}
+
+/* Different speeds per row */
+.speed-1 .cloud-track { animation-duration: 9s; }
+.speed-2 .cloud-track { animation-duration: 11s; }
+.speed-3 .cloud-track { animation-duration: 9s; }
+
+/* Pause on hover (entire row)
+.cloud-row:hover .cloud-track {
+  animation-play-state: paused;
+} */
+
+/* Seamless infinite scroll */
+@keyframes scrollLoop {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* slides left by half (first copy width) */
+}
+
+/* ===== CITATION ===== */
+.citation {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #333;
+  margin: 40px auto;
+  max-width: 700px;
+  padding: 20px;
+}
+
+/* Pause animation on hover
+.cloud-row:hover {
+  animation-play-state: paused;
+} */
