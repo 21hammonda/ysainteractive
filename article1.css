@@ -1,182 +1,141 @@
-.jacquard-12-regular {
-    font-family: "Jacquard 12", system-ui;
-    font-weight: 400;
-    font-style: normal;
+/* =============== GLOBAL =============== */
+html, body {
+  height: 100%;
+  margin: 0;
+  background: transparent;   /* no white background blocking letters */
+  overflow: visible;         /* let fixed letters show full height */
+  font-family: "Special Elite", monospace;
 }
 
-/* -------- Scroll Menu -------- */
-.scroll-menu {
-    grid-column: 1 / -1;   /* make header span all grid columns */
+/* =============== FLOATING LETTERS BACKGROUND =============== */
+.floating-letters {
+  position: absolute;  /* fills entire page height */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;          /* behind everything */
+  pointer-events: none; /* clicks pass through */
+}
+
+html, body {
+  height: auto;      /* let page grow */
+  min-height: 100%;  /* ensure at least full viewport */
+}
+
+.letter {
+  position: absolute;
+  font-family: "Special Elite", monospace;
+  color: rgba(0, 0, 0, 0.08);
+  animation: drift 30s linear infinite;
+  /* each letter will get a random delay*/
+}
+
+@keyframes drift {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-200vh); } /* floats up well beyond screen */
+}
+
+/* =============== NAVIGATION =============== */
+header {
+  background: #f5f5f5;
+  border-bottom: 2px solid #ccc;
+  padding: 15px 40px;
+  position: relative; /* sits above background */
+  z-index: 1;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+nav a {
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: #333;
+  white-space: nowrap;
+}
+
+/* =============== MAIN GRID =============== */
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);  /* 4 columns */
+  grid-auto-rows: minmax(180px, auto);
+  gap: 40px;             /* space between cells */
+  padding: 40px;
+  background: transparent; /* see letters behind empty cells */
+  position: relative;
+  z-index: 1;            /* above the background */
+}
+
+/* Generic cells */
+.cell {
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.cell.text,
+.cell.date-greeting,
+.cell.media,
+.cell.signoff,
+.cell.citation {
+  background: #fff;  /* opaque blocks for text/media */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.cell.empty {
+  background: transparent; /* clear window to background */
+  box-shadow: none;
+}
+
+/* Date & greeting cell */
+.date-greeting h3 {
+  text-align: right;
+  font-size: 1.2em;
+  margin: 0 0 10px;
+}
+
+.date-greeting p {
+  font-style: italic;
+  font-size: 2rem;
+  margin: 0;
+}
+
+/* Media */
+.media img,
+.media audio {
+  max-width: 100%;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Signature & citation */
+.signoff {
+  text-align: right;
+  margin-top: 10px;
+}
+
+.citation {
+  font-size: 14px;
+  text-align: center;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+  color: #444;
+}
+
+/* =============== RESPONSIVE =============== */
+@media (max-width: 900px) {
+  .article-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
-  
-  .scroll-wrapper {
-    position: relative;
-    display: block;           /* full width so nav can span */
-    width: 100%;
-    max-width: 100%;
-  }
-  
-  /* Closed scroll (default) */
-  .scroll.closed {
-    display: block;
-    height: 150px;            /* adjust height to your design */
-    width: auto;
-    margin: 0 auto;
-    opacity: 1;
-    transition: opacity 0.3s ease;
-  }
-  
-  /* Open scroll on hover */
-  .scroll.open {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 150px;
-    width: 98vw;
-    max-width: none;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-  
-  /* Nav links on top of the open scroll */
-  .menu-links {
-    position: absolute;
-    top: 50%;                     /* vertical center */
-    transform: translateY(-50%);
-    left: 1vw;
-    right: 1vw;
-    display: flex;
-    flex-wrap: nowrap;            /* single line only */
-    justify-content: space-between;
-    align-items: center;
-    white-space: nowrap;          /* prevent wrapping */
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    font-family: 'Jacquard 12', cursive;
-    font-size: clamp(0.95rem, 1.2vw, 1.25rem);
-  }
-  
-  .menu-links a {
-    flex: 1 1 0;                  /* equal width columns */
-    text-align: center;
-    padding: 0 .5rem;
-    color: #3b2a1a;
-    text-decoration: none;
-  }
-  
-  /* Hover reveal */
-  .scroll-wrapper:hover .closed { opacity: 0; }
-  .scroll-wrapper:hover .open   { opacity: 1; }
-  .scroll-wrapper:hover .menu-links { opacity: 1; }
-  
-  /* Push page content below the scroll bar */
-  main {
-    margin-top: 170px;            /* matches scroll height */
-  }
-  
-  /* Optional: shrink fonts on small screens
-  @media (max-width: 600px) {
-    .scroll.closed, .scroll.open { height: 120px; }
-    .menu-links { font-size: clamp(0.85rem, 2.5vw, 1rem); }
-    .menu-links a { padding: 0 .35rem; }
-  }
-  
- */
-
-
-/* general font + background */
-body {
-    font-family: "Jacquard 12", system-ui;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    font-size: 25px;
-    display: grid;
-    grid-template-columns: 1fr minmax(600px, 3fr) 1fr;
-    grid-template-rows: auto 1fr auto;
-    background-image: url('https://i.redd.it/yqx4nd5l3tba1.gif');
-    background-size: 150px 100px;
-
 }
 
-/*
-body::before {
-    background-image: url('https://i.redd.it/yqx4nd5l3tba1.gif');
-}
-
-Right gutter
-body::after {
-    content: "";
-    grid-column: 3;
-    grid-row: 1 / -1;
-    background: repeating-conic-gradient(
-        #f2f2f2 0deg 90deg, 
-        #919191 90deg 180deg,
-        #767676 180deg 270deg,
-        #cccccc 270deg 360deg
-    );
-    background-size: 40px 40px;
-    opacity: 0.5;
-}
-*/
-
-/* Make sure main stays on top */
-main {
-    grid-column: 2;
-    padding: 40px 60px;
-    background: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    position: relative;
-    z-index: 1;
-}
-
-/* Date */
-.date {
-    text-align: right;
-    font-size: 1.2em;
-}
-
-/* Greeting */
-.greeting {
-    font-style: italic;
-    font-size: 80px;
-}
-
-/* Body paragraphs */
-.letter-body {
-    line-height: 1.6;
-    text-align: justify;
-    display: grid;
-    gap: 15px;
-}
-
-/* Multimedia section */
-.media {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    margin-top: 20px;
-}
-.media img, .media video, .media audio, .media iframe {
-    max-width: 100%;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-}
-
-/* Signature */
-#SignOff {
-    text-align: right;
-    margin-top: 30px;
-}
-
-/* Citation */
-#citation {
-    font-size: 14px;
-    text-align: center;
-    border-top: 1px solid #ccc;
-    padding-top: 10px;
-    color: #444;
+.cell.empty {
+  background: transparent;
+  box-shadow: none;
+  pointer-events: none;      /* let clicks pass through */
+  z-index: -1;               /* push them behind other content */
 }
