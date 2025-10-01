@@ -1,0 +1,96 @@
+/* ===== General ===== */
+body {
+    margin: 0;
+    font-family: "Special Elite", monospace;
+    background: #f0f4f8;
+    font-family: 11px;
+  }
+  
+  /* ===== Breaking News Banner ===== */
+  .breaking-banner {
+    position: sticky;
+    top: 0;
+    background: #111;
+    color: #fff;
+    overflow: hidden;
+    height: 40px;
+    z-index: 10;
+  }
+  
+  .breaking-banner a { color: #ffe066; text-decoration: none; }
+  
+  .marquee {
+    display: inline-block;
+    white-space: nowrap;
+    animation: scrollBanner 20s linear infinite;
+  }
+  
+  .marquee span {
+    padding-right: 50px;
+  }
+  
+  @keyframes scrollBanner {
+    from { transform: translateX(0%); }
+    to   { transform: translateX(-50%); }
+  }
+  
+  /* ===== TRACK LAYOUT ===== */
+  .track-layout {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto auto auto; /* 4 rows auto height */
+    gap: 20px;
+    padding: 40px;
+    position: relative;
+  }
+  
+  /* Track sections */
+  .track-area {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .track {
+    width: 100%;
+    max-width: 400px;
+  }
+  .runner {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    font-size: 32px;
+    text-align: center;
+    transition: transform 0.1s linear;
+    pointer-events: none;
+  }
+  
+  /* Text boxes */
+  .text-box {
+    background: #fff;
+    padding: 15px 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transition: background 0.3s;
+    white-space: normal;
+    overflow: visible;
+  }
+  .text-box.active { background: #ffe066; }
+  
+  /* Grid placement */
+  #box1 { grid-column: 1; grid-row: 1; }
+  #box2 { grid-column: 2; grid-row: 1; }
+  #box3 { grid-column: 3; grid-row: 1; }
+  
+  #box4 { grid-column: 1; grid-row: 2; }
+  .track-top    { grid-column: 2; grid-row: 2; }
+  #box5 { grid-column: 3; grid-row: 2; }
+  
+  #box6 { grid-column: 1; grid-row: 3; }
+  .track-bottom { grid-column: 2; grid-row: 3; }
+  #box7 { grid-column: 3; grid-row: 3; }
+  
+  #box8 { grid-column: 1; grid-row: 4; }
+  #box9 { grid-column: 2; grid-row: 4; }
+  #box10{ grid-column: 3; grid-row: 4; }
+  

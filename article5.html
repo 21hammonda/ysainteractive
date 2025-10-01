@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Article 5 - Running & Modern Politics</title>
+  <link rel="stylesheet" href="article5.css" />
+</head>
+<body>
+
+  <!-- ===== SCROLLING HEADER ===== -->
+  <header class="breaking-banner">
+    <div class="marquee">
+      <span>
+        <a href="index.html">Home</a> • 
+        <a href="article1.html">Article 1</a> • 
+        <a href="article2.html">Article 2</a> • 
+        <a href="article3.html">Article 3</a> • 
+        <a href="article4.html">Article 4</a> • 
+        <a href="article5.html">Article 5</a> • 
+      </span>
+      <span>
+        <a href="index.html">Home</a> • 
+        <a href="article1.html">Article 1</a> • 
+        <a href="article2.html">Article 2</a> • 
+        <a href="article3.html">Article 3</a> • 
+        <a href="article4.html">Article 4</a> • 
+        <a href="article5.html">Article 5</a> • 
+      </span>
+    </div>
+  </header>
+
+  <!-- ===== TRACK + TEXT ===== -->
+  <main class="track-layout">
+
+    <!-- ROW 1 -->
+    <div class="text-box" id="box1">
+      <p>Political decisions and even the tone and culture of debate have consequences 
+         that reach into <b>every</b> aspect of society — including the world of sports.</p>
+    </div>
+
+    <div class="text-box" id="box2">
+      <p>Running may seem disconnected from such debates, but it is not. 
+         The values we uphold in our running communities reflect the values we uphold 
+         in the wider world.</p>
+    </div>
+
+    <div class="text-box" id="box3">
+      <p>Inevitably, however, someone will chime in with the all-too-familiar phrase: 
+         <em>"Keep politics out of running!"</em></p>
+    </div>
+
+    <!-- ROW 2 -->
+    <div class="text-box" id="box4">
+      <p><b>Let's be clear:</b></p>
+      <p><em>Running is political.</em></p>
+    </div>
+
+    <div class="track-area track-top">
+      <img src="track.png" alt="Running Track" class="track" />
+      <div class="runner">🏃‍♀️</div>
+    </div>
+
+    <div class="text-box" id="box5">
+      <p>Running is an activity that brings people together, builds communities, 
+         and can serve as a platform for visibility and solidarity.</p>
+    </div>
+
+    <!-- ROW 3 -->
+    <div class="text-box" id="box6">
+      <p>Also, simply ignoring politics in running is a privilege that many do not have.</p>
+      <ul>
+        <li>Who can run freely in public spaces without being attacked?</li>
+        <li>Who has access to safe running facilities?</li>
+        <li>Who feels welcome at races, in running crews, in sports clubs?</li>
+        <li>Who is judged at the starting line because they don’t have the money for the latest shoes?</li>
+        <li>Who is treated differently in running communities?</li>
+      </ul>
+    </div>
+
+    <div class="track-area track-bottom">
+      <img src="track.png" alt="Running Track" class="track" />
+    </div>
+
+    <div class="text-box" id="box7">
+      <p>SPECIAL EFFECT: <br>These are inherently political questions. Pretending otherwise 
+         is not neutrality — it is a choice to ignore the structures that create inclusion 
+         for some and exclusion for others.</p>
+    </div>
+
+    <!-- ROW 4 -->
+    <div class="text-box" id="box8">
+      <p>Yes, I believe that the running community has the potential to be a powerful force 
+         for positive change. A space where meaningful debate opens hearts and minds.</p>
+    </div>
+
+    <div class="text-box" id="box9">
+      <p>Where solidarity extends beyond the high five after a run, and where peaceful coexistence 
+         of different backgrounds, beliefs, and identities is practiced every day. 
+         Running together makes a statement. It proves that diversity is not a threat, but a strength.</p>
+    </div>
+
+    <div class="text-box" id="box10">
+      <p>Now, more than ever, is the time to be loud and visible. To open this space for debate and exchange. Silence is death.</p>
+      <p>So speak your mind. State your values. Stand up to injustice whenever and wherever you see it. 
+         And never let anyone tell you that there is no place for political discourse in running. There is.</p>
+    </div>
+
+  </main>
+
+  <script>
+    // ===== Smooth Runner Controls =====
+    const runner = document.querySelector('.runner');
+    let x = 50, y = 50; // percentage inside track-area
+    let targetX = x, targetY = y;
+    const speed = 10, ease = 0.1;
+
+    document.addEventListener('keydown', e => {
+      switch (e.key) {
+        case 'ArrowLeft':  targetX = Math.max(0, targetX - speed); break;
+        case 'ArrowRight': targetX = Math.min(100, targetX + speed); break;
+        case 'ArrowUp':    targetY = Math.max(0, targetY - speed); break;
+        case 'ArrowDown':  targetY = Math.min(100, targetY + speed); break;
+      }
+    });
+
+    function animate() {
+      x += (targetX - x) * ease;
+      y += (targetY - y) * ease;
+      runner.style.transform = `translate(-50%,-50%) translate(${x}%, ${y}%)`;
+      checkCollisions();
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // ===== Collision detection to highlight text =====
+    function checkCollisions() {
+      const runnerRect = runner.getBoundingClientRect();
+      document.querySelectorAll('.text-box').forEach(box => {
+        const rect = box.getBoundingClientRect();
+        const overlap = !(runnerRect.right < rect.left ||
+                          runnerRect.left > rect.right ||
+                          runnerRect.bottom < rect.top ||
+                          runnerRect.top > rect.bottom);
+        box.classList.toggle('active', overlap);
+      });
+    }
+  </script>
+
+</body>
+</html>
