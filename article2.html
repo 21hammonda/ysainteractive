@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="article2.css" />
+  <title>The Dinosaur Game</title>
+</head>
+<body>
+    <!--HEADER-->
+    <header class="medal-nav">
+        <a href="index.html" class="medal-link">
+        <span class="medal-text">Home</span>
+        <img src="mile0.png" alt="Home Mile" class="medal-img" />
+        </a>
+        <a href="article1.html" class="medal-link">
+        <span class="medal-text">Article 1</span>
+        <img src="mile1.png" alt="Article 1 Mile" class="medal-img" />
+        </a>
+        <a href="article2.html" class="medal-link">
+        <span class="medal-text">Article 2</span>
+        <img src="mile2.png" alt="Article 2 Mile" class="medal-img" />
+        </a>
+        <a href="article3.html" class="medal-link">
+        <span class="medal-text">Article 3</span>
+        <img src="mile3.png" alt="Article 3 Mile" class="medal-img" />
+        </a>
+        <a href="article4.html" class="medal-link">
+        <span class="medal-text">Article 4</span>
+        <img src="mile4.png" alt="Article 4 Mile" class="medal-img" />
+        </a>
+        <a href="article5.html" class="medal-link">
+        <span class="medal-text">Article 5</span>
+        <img src="mile5.png" alt="Article 5 Mile" class="medal-img" />
+        </a>
+        <a href="article6.html" class="medal-link">
+        <span class="medal-text">Article 6</span>
+        <img src="mile6.png" alt="Article 6 Mile" class="medal-img" />
+        </a>
+    </header>
+
+    <!--GAME-->
+  <div class="game">
+    <div id="dino">D</div>
+    <div id="platform-container"></div>
+  </div>
+
+  <div id="citations">
+    <p>Dongyu, Y. (2015, November 9). <i>Running Through the Pain. Harvard Political Review.</i> <a href="https://theharvardpoliticalreview.com/running-pain/">https://theharvardpoliticalreview.com/running-pain/</a></p>
+</div>
+  <script>
+    const dino = document.getElementById("dino");
+    const platformContainer = document.getElementById("platform-container");
+    const game = document.querySelector(".game");
+  
+    const char = "D";
+    dino.textContent = char;
+  
+    const gravity = 1;
+    let velocity = 0;
+    let isJumping = false;
+    let position = 0;
+    let onPlatform = null; // Track which platform the dino is on
+  
+    const gameHeight = 200;
+    const dinoHeight = 40;
+  
+    const sentences = [
+      "As I ran the Boston Marathon in 2013, I visualized the finish line.",
+      "Limbs feel leaden, every step feels harder than the last.",
+      "The mental component of the wall is as real as the chemical one.",
+      "The explosions that year irrevocably colored running for me.",
+      "But running one marathon is simply a sip of water.",
+      "HE DOESN'T WANT STILLNESS, THIS FRIEND OF MINE.",
+      "You can go farther than you ever realized.",
+      "In striving, you are a runner, so rejoice—you have won.",
+      "Running has a healing power, a connecting power.",
+      "It was an emblematic reminder that the marathon is a triumph over all hurt.",
+      "The ancient Greeks used to run athletic races and games at funerals as a way to mourn losses while reaffirming life.",
+      "Running any distance at any speed fights stillness and monotony, and it hurts.",
+      "But 26.2 miles later, I crossed the finish line again, in a baptismal downpour.",
+      "Running is proving that you are more than your body, that you can overcome hurt and loss. In your lungs, legs, heart.",
+      "You have the most incredible capacity to breathe deep and go farther."
+    ];
+  
+    function spawnPlatform() {
+      const sentence = sentences[Math.floor(Math.random() * sentences.length)];
+      const platform = document.createElement("div");
+      platform.classList.add("platform");
+      platform.textContent = sentence;
+      
+      // Random height for platforms
+      const randomHeight = Math.floor(Math.random() * 3) * 40 + 40;
+      platform.style.bottom = randomHeight + "px";
+      platformContainer.appendChild(platform);
+  
+      setTimeout(() => {
+        if (onPlatform === platform) {
+          onPlatform = null;
+        }
+        platform.remove();
+      }, 5000);
+    }
+  
+    setInterval(spawnPlatform, 3000);
+  
+    function jump() {
+      if (!isJumping) {
+        velocity = 18;
+        isJumping = true;
+        onPlatform = null; // Leave the platform when jumping
+      }
+    }
+  
+    document.addEventListener("keydown", jump);
+  
+    function update() {
+      // Only apply gravity if not standing on a platform
+      if (!onPlatform) {
+        velocity -= gravity;
+        position += velocity;
+      }
+  
+      // Ground collision
+      if (position < 0) {
+        position = 0;
+        velocity = 0;
+        isJumping = false;
+        onPlatform = null;
+      }
+  
+      // Platform collision detection
+      const platforms = document.querySelectorAll(".platform");
+      let landedOnPlatform = false;
+      
+      platforms.forEach(platform => {
+        const gameRect = game.getBoundingClientRect();
+        const dinoRect = dino.getBoundingClientRect();
+        const platRect = platform.getBoundingClientRect();
+  
+        const dinoBottom = dinoRect.bottom;
+        const platTop = platRect.top;
+        const dinoLeft = dinoRect.left;
+        const dinoRight = dinoRect.right;
+        const platLeft = platRect.left;
+        const platRight = platRect.right;
+  
+        // Check if dino is falling onto the platform
+        const isAbovePlatform = dinoBottom >= platTop - 5 && dinoBottom <= platTop + 10;
+        const isWithinPlatform = dinoRight > platLeft + 10 && dinoLeft < platRight - 10;
+  
+        if (isAbovePlatform && isWithinPlatform && velocity <= 0) {
+          // Land on platform
+          const platformBottomFromGame = parseInt(platform.style.bottom);
+          const platformHeight = platRect.height;
+          position = platformBottomFromGame + platformHeight;
+          velocity = 0;
+          isJumping = false;
+          onPlatform = platform;
+          landedOnPlatform = true;
+        }
+      });
+      
+      // If we were on a platform but no longer colliding with any, start falling
+      if (onPlatform && !landedOnPlatform) {
+        onPlatform = null;
+      }
+  
+      // Clamp to game area
+      const maxPosition = gameHeight - dinoHeight;
+      position = Math.min(position, maxPosition);
+  
+      dino.style.bottom = position + "px";
+  
+      requestAnimationFrame(update);
+    }
+  
+    update();
+  </script>
+  
+</body>
+</html>

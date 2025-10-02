@@ -1,0 +1,104 @@
+body {
+    background: #eef;
+    font-family: sans-serif;
+  }
+  
+  .game {
+    position: relative;
+    width: 800px;
+    height: 200px;
+    margin: 50px auto;
+    border: 2px solid #333;
+    background-color: #fafafa;
+    overflow: hidden;
+  }
+  
+  #dino {
+    position: absolute;
+    left: 50px;
+    bottom: 0;
+    width: 40px;
+    height: 40px;
+    background-color: limegreen;
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    line-height: 40px;
+    border: 2px solid black;
+    z-index: 10;
+  }
+  
+  #platform-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  
+  .platform {
+    position: absolute;
+    left: 100%;
+    white-space: nowrap;
+    background-color: lightblue;
+    border: 1px solid #000;
+    padding: 5px 10px;
+    font-size: 14px;
+    animation: moveLeft 5s linear forwards;
+  }
+  
+  @keyframes moveLeft {
+    from {
+      left: 100%;
+    }
+    to {
+      left: -500px;
+    }
+  }
+
+/*  MEDAL NAV BAR  */
+.medal-nav {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    padding: 20px 0;
+    background: #111;
+    flex-wrap: wrap; /* allow wrapping on smaller screens */
+  }
+  
+  .medal-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+  }
+  
+  .medal-text {
+    font-size: 14px;
+    color: #f5f5f5;
+    margin-bottom: 6px;
+    transition: color 0.3s ease;
+    text-align: center;
+  }
+  
+  .medal-link:hover .medal-text {
+    color: #ffd700; /* gold */
+  }
+  
+  .medal-img {
+    height: 80px;
+    transform-origin: top center;
+    transition: transform 0.3s ease;
+  }
+  
+  .medal-link:hover .medal-img {
+    animation: swing 1s ease-in-out infinite alternate;
+  }
+  
+  @keyframes swing {
+    0%   { transform: rotate(-10deg); }
+    100% { transform: rotate(10deg); }
+  }
+  
+  

@@ -124,12 +124,22 @@
                         index = (index - 1 + letters.length) % letters.length;
                     } else if (event.key === "Enter") {
                         // Store selected character
+                        // selectedChar = letters[index].innerText;
+
+                        // // Show selected character on the moveable box
+                        // boxEl.textContent = selectedChar;
+
+                        // // Hide modal and show main content
+                        // modal.style.display = "none";
+                        // mainContent.style.display = "block";
+                        // result.innerText = "You selected: " + selectedChar;
+                        // return;
                         selectedChar = letters[index].innerText;
 
-                        // Show selected character on the moveable box
                         boxEl.textContent = selectedChar;
 
-                        // Hide modal and show main content
+                        localStorage.setItem("selectedChar", selectedChar); // Save to use in game
+
                         modal.style.display = "none";
                         mainContent.style.display = "block";
                         result.innerText = "You selected: " + selectedChar;

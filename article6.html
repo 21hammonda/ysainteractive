@@ -15,7 +15,7 @@
 </head>
 <body>
 
-    <!--  SCROLLING HEADER  -->
+    <!--  MEDAL HEADER  -->
     <header class="medal-nav">
         <a href="index.html" class="medal-link">
         <span class="medal-text">Home</span>
@@ -80,7 +80,7 @@
 
   <!--  D3 SCRIPT  -->
   <script>
-    // ===== Helper: parse "hh:mm:ss" to total minutes =====
+    // Helper: parse "hh:mm:ss" to total minutes 
     function parseTimeToMinutes(timeStr) {
       if (!timeStr) return NaN;
       const parts = timeStr.split(":").map(Number);
@@ -119,7 +119,7 @@
         .domain([0, d3.max(binsOverall, d => d.length)]).nice()
         .range([height - margin.bottom, margin.top]);
   
-      // ===== Overall Chart =====
+      // Overall Chart 
       const overallSvg = d3.select("#overallChart")
         .attr("viewBox", [0, 0, width, height]);
   
@@ -158,7 +158,7 @@
         .attr("y2", height - margin.bottom)
         .style("opacity", 0);
   
-      // ===== Age Chart (empty until user clicks) =====
+      // Age Chart (empty until user clicks) 
       const ageSvg = d3.select("#ageChart").attr("viewBox", [0, 0, width, height]);
       const userLineAge = ageSvg.append("line")
         .attr("stroke", "red")
@@ -167,7 +167,7 @@
         .attr("y2", height - margin.bottom)
         .style("opacity", 0);
   
-      // ===== Rank Chart =====
+      // Rank Chart 
       const rankSvg = d3.select("#rankChart").attr("viewBox", [0, 0, width, 150]);
       const rankScale = d3.scaleLinear()
         .domain([1, d3.max(data, d => d.RankOverall)])
@@ -186,7 +186,7 @@
         .attr("fill", "red")
         .style("opacity", 0);
   
-      // ===== Update charts on button click =====
+      // Update charts on button click 
       document.getElementById("predictBtn").addEventListener("click", () => {
         const age = +document.getElementById("ageInput").value;
         const time = parseTimeToMinutes(document.getElementById("timeInput").value);

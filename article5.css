@@ -1,4 +1,4 @@
-/* ===== General ===== */
+/* General */
 body {
     margin: 0;
     font-family: "Special Elite", monospace;
@@ -6,7 +6,7 @@ body {
     font-family: 11px;
   }
   
-  /* ===== Breaking News Banner ===== */
+  /* Breaking News Banner */
   .breaking-banner {
     position: sticky;
     top: 0;
@@ -34,7 +34,7 @@ body {
     to   { transform: translateX(-50%); }
   }
   
-  /* ===== TRACK LAYOUT ===== */
+  /* TRACK LAYOUT */
   .track-layout {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
