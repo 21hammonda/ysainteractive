@@ -1,0 +1,115 @@
+body {
+    margin: 0;
+    font-family: "Special Elite", monospace;
+    background: #f7f8fa;
+    color: #111;
+    line-height: 1.7;
+    padding-left: 40px; /* left margin for all content */
+    padding-right: 20px;
+  }
+  
+  /* --- Medal Nav --- */
+  .medal-nav {
+    display: flex; justify-content: center; gap: 40px;
+    padding: 15px 0; background: #111; flex-wrap: wrap;
+  }
+  .medal-link {display:flex;flex-direction:column;align-items:center;text-decoration:none;}
+  .medal-text {font-size:14px;color:#f5f5f5;margin-bottom:6px;transition:color .3s;}
+  .medal-link:hover .medal-text {color:#ffd700;}
+  .medal-img {height:70px;transform-origin:top center;transition:transform .3s;}
+  .medal-link:hover .medal-img {animation:swing 1s ease-in-out infinite alternate;}
+  @keyframes swing {0%{transform:rotate(-10deg);}100%{transform:rotate(10deg);}}
+  
+  /* --- Hero Title --- */
+  .hero {text-align:center;padding:40px 20px 10px;}
+  .running-title span {display:inline-block;animation:bounce 2s ease-in-out infinite;}
+  .running-title span:nth-child(odd){animation-delay:.2s;}
+  .running-title span:nth-child(even){animation-delay:.4s;}
+  @keyframes bounce {0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
+  .chapter {margin-top:10px;font-size:1.2rem;color:#444;}
+  
+  /* --- Track paragraphs --- */
+  .track {
+    border-left: 4px solid #e74c3c;
+    padding-left: 14px;
+    background: repeating-linear-gradient(to bottom,
+      transparent, transparent 1.8em,
+      rgba(0,0,0,0.05) 1.8em, rgba(0,0,0,0.05) 2em);
+    margin: 20px auto;
+    max-width: 900px;
+  }
+  .track a {color:#e74c3c;}
+  
+  /* --- Bib headings --- */
+  .bib {
+    display:inline-block;
+    background:#fff;border:2px solid #111;
+    padding:10px 20px;font-family:Impact,sans-serif;
+    text-transform:uppercase;font-size:1.1rem;
+    letter-spacing:1px;margin:40px auto 15px;
+    position:relative;
+  }
+  .bib::before,.bib::after {
+    content:"●";position:absolute;top:6px;font-size:14px;color:#111;
+  }
+  .bib::before{left:8px;} .bib::after{right:8px;}
+  
+  /* --- Mile markers --- */
+  .mile-marker {
+    display:inline-block;font-size:.9rem;text-transform:uppercase;
+    background:#111;color:#fff;padding:3px 8px;border-radius:4px;
+    margin:30px auto 10px;
+  }
+  
+  /* --- Quote --- */
+  .quote {
+    font-style:italic;
+    background:#fff7f7;
+    border-left:5px solid #e74c3c;
+    padding:10px 14px;
+    margin:20px auto;
+    max-width:900px;
+  }
+  
+  /* --- Responsive --- */
+  @media(min-width:1200px){
+    .running-title{font-size:2.8rem;}
+    .bib{font-size:1.3rem;}
+    .track{font-size:1.1rem;}
+  }
+  @media(max-width:1199px) and (min-width:768px){
+    .running-title{font-size:2.2rem;}
+    .bib{font-size:1.2rem;}
+    .track{font-size:1rem;}
+  }
+  @media(max-width:767px){
+    body {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+    .running-title {
+      font-size: 1.8rem;
+      line-height: 2.2rem;
+    }
+    .chapter {
+      font-size: 1rem;
+    }
+    .bib {
+      font-size: 1rem;
+      padding: 8px 16px;
+    }
+    .track {
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .medal-nav {
+      gap: 20px;
+      padding: 10px 0;
+    }
+    .medal-img {
+      height: 55px;
+    }
+    .medal-text {
+      font-size: 12px;
+    }
+  }

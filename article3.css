@@ -1,4 +1,4 @@
-/* ===== General ===== */
+/*  General  */
 body {
   margin: 0;
   font-family: "Special Elite", monospace;
@@ -7,7 +7,7 @@ body {
   font-size: 10px;
 }
 
-/* ===== HEADER CLOUD NAV ===== */
+/*  HEADER CLOUD NAV  */
 .cloud-header {
   background: #bcd2e8;
   padding: 20px 0;
@@ -40,7 +40,7 @@ body {
 }
 
 
-/* ===== SKY & PLANE ===== */
+/*  SKY & PLANE  */
 .sky {
   position: relative;
   width: 100%;
@@ -66,8 +66,8 @@ body {
   50%      { transform: translateY(-15px); }
 }
 
-/* ===== CLOUD ROWS ===== */
-/* ===== CLOUD ROWS ===== */
+/*  CLOUD ROWS  */
+/*  CLOUD ROWS  */
 .cloud-row {
   position: relative;
   overflow: hidden;    /* keep extra clouds clipped */
@@ -111,7 +111,7 @@ body {
   100% { transform: translateX(-50%); } /* slides left by half (first copy width) */
 }
 
-/* ===== CITATION ===== */
+/*  CITATION  */
 .citation {
   text-align: center;
   font-size: 0.9rem;

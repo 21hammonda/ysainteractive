@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Article 6 - Marathon Performance Predictor</title>
+  <link rel="stylesheet" href="article6.css" />
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    svg { width: 100%; height: 300px; }
+    .chart-container { margin: 40px auto; max-width: 900px; }
+    .controls { text-align: center; margin: 30px auto; }
+    .controls input { margin: 0 5px; }
+  </style>
+</head>
+<body>
+
+    <!--  SCROLLING HEADER  -->
+    <header class="medal-nav">
+        <a href="index.html" class="medal-link">
+        <span class="medal-text">Home</span>
+        <img src="medal.png" alt="Home Medal" class="medal-img" />
+        </a>
+        <a href="article1.html" class="medal-link">
+        <span class="medal-text">Article 1</span>
+        <img src="medal.png" alt="Article 1 Medal" class="medal-img" />
+        </a>
+        <a href="article2.html" class="medal-link">
+        <span class="medal-text">Article 2</span>
+        <img src="medal.png" alt="Article 2 Medal" class="medal-img" />
+        </a>
+        <a href="article3.html" class="medal-link">
+        <span class="medal-text">Article 3</span>
+        <img src="medal.png" alt="Article 3 Medal" class="medal-img" />
+        </a>
+        <a href="article4.html" class="medal-link">
+        <span class="medal-text">Article 4</span>
+        <img src="medal.png" alt="Article 4 Medal" class="medal-img" />
+        </a>
+        <a href="article5.html" class="medal-link">
+        <span class="medal-text">Article 5</span>
+        <img src="medal.png" alt="Article 5 Medal" class="medal-img" />
+        </a>
+        <a href="article6.html" class="medal-link">
+        <span class="medal-text">Article 6</span>
+        <img src="medal.png" alt="Article 6 Medal" class="medal-img" />
+        </a>
+    </header>
+  
+
+  <!--  USER INPUT  -->
+  <section class="controls">
+    <h2>See how you&apos;d place at the Boston Marathon!</h2>
+    <label>
+      Your Age:
+      <input type="number" id="ageInput" min="18" max="99" value="30" />
+    </label>
+    <label>
+      Your Time (hh:mm:ss):
+      <input type="text" id="timeInput" placeholder="3:30:00" />
+    </label>
+    <button id="predictBtn">Predict Placement</button>
+  </section>
+
+  <!--  CHARTS  -->
+  <section class="charts">
+    <div class="chart-container">
+      <h3>Overall Finishing Time Distribution</h3>
+      <svg id="overallChart"></svg>
+    </div>
+    <div class="chart-container">
+      <h3>Finishing Time Distribution for Your Age Group</h3>
+      <svg id="ageChart"></svg>
+    </div>
+    <div class="chart-container">
+      <h3>Your Overall Rank vs All Runners</h3>
+      <svg id="rankChart" height="150"></svg>
+    </div>
+  </section>
+
+  <!--  D3 SCRIPT  -->
+  <script>
+    // ===== Helper: parse "hh:mm:ss" to total minutes =====
+    function parseTimeToMinutes(timeStr) {
+      if (!timeStr) return NaN;
+      const parts = timeStr.split(":").map(Number);
+      if (parts.length === 3) return parts[0] * 60 + parts[1] + parts[2] / 60;
+      if (parts.length === 2) return parts[0] * 60 + parts[1];
+      return NaN;
+    }
+  
+    d3.csv("boston2023.csv").then(data => {
+      // --- Parse data ---
+      data.forEach(d => {
+        d.AgeOnRaceDay = +d.AgeOnRaceDay;
+        d.OfficialTimeMin = parseTimeToMinutes(d.OfficialTime);
+        d.RankOverall = +d.RankOverall;
+      });
+  
+      const overallTimes = data.map(d => d.OfficialTimeMin).filter(d => !isNaN(d));
+  
+      const width = 900,
+            height = 300,
+            margin = { top: 20, right: 20, bottom: 40, left: 60 };
+  
+      // --- Dynamic font size for axes based on screen ---
+      function axisFontSize() {
+        if (window.innerWidth >= 1200) return 16;
+        if (window.innerWidth >= 768) return 12;
+        return 10;
+      }
+  
+      const xScale = d3.scaleLinear()
+        .domain(d3.extent(overallTimes))
+        .range([margin.left, width - margin.right]);
+  
+      const binsOverall = d3.bin().domain(xScale.domain()).thresholds(40)(overallTimes);
+      const yScaleOverall = d3.scaleLinear()
+        .domain([0, d3.max(binsOverall, d => d.length)]).nice()
+        .range([height - margin.bottom, margin.top]);
+  
+      // ===== Overall Chart =====
+      const overallSvg = d3.select("#overallChart")
+        .attr("viewBox", [0, 0, width, height]);
+  
+      // X axis
+      overallSvg.append("g")
+        .attr("transform", `translate(0,${height - margin.bottom})`)
+        .attr("class", "axis x-axis")
+        .call(d3.axisBottom(xScale)
+          .tickFormat(d => `${Math.floor(d / 60)}h${Math.round(d % 60)}`))
+        .selectAll("text")
+        .style("font-size", axisFontSize() + "px");
+  
+      // Y axis (no commas)
+      overallSvg.append("g")
+        .attr("transform", `translate(${margin.left},0)`)
+        .attr("class", "axis y-axis")
+        .call(d3.axisLeft(yScaleOverall).tickFormat(d3.format(".0f")))
+        .selectAll("text")
+        .style("font-size", axisFontSize() + "px");
+  
+      // Bars
+      overallSvg.selectAll("rect")
+        .data(binsOverall)
+        .enter().append("rect")
+        .attr("x", d => xScale(d.x0))
+        .attr("y", d => yScaleOverall(d.length))
+        .attr("width", d => Math.max(0, xScale(d.x1) - xScale(d.x0) - 1))
+        .attr("height", d => yScaleOverall(0) - yScaleOverall(d.length))
+        .attr("fill", "#69b3a2");
+  
+      // User time marker line
+      const userLineOverall = overallSvg.append("line")
+        .attr("stroke", "red")
+        .attr("stroke-width", 2)
+        .attr("y1", margin.top)
+        .attr("y2", height - margin.bottom)
+        .style("opacity", 0);
+  
+      // ===== Age Chart (empty until user clicks) =====
+      const ageSvg = d3.select("#ageChart").attr("viewBox", [0, 0, width, height]);
+      const userLineAge = ageSvg.append("line")
+        .attr("stroke", "red")
+        .attr("stroke-width", 2)
+        .attr("y1", margin.top)
+        .attr("y2", height - margin.bottom)
+        .style("opacity", 0);
+  
+      // ===== Rank Chart =====
+      const rankSvg = d3.select("#rankChart").attr("viewBox", [0, 0, width, 150]);
+      const rankScale = d3.scaleLinear()
+        .domain([1, d3.max(data, d => d.RankOverall)])
+        .range([margin.left, width - margin.right]);
+  
+      rankSvg.append("g")
+        .attr("transform", `translate(0,100)`)
+        .attr("class", "axis x-axis")
+        .call(d3.axisBottom(rankScale).tickFormat(d3.format(".0f")))
+        .selectAll("text")
+        .style("font-size", axisFontSize() + "px");
+  
+      const rankCircle = rankSvg.append("circle")
+        .attr("cy", 80)
+        .attr("r", 6)
+        .attr("fill", "red")
+        .style("opacity", 0);
+  
+      // ===== Update charts on button click =====
+      document.getElementById("predictBtn").addEventListener("click", () => {
+        const age = +document.getElementById("ageInput").value;
+        const time = parseTimeToMinutes(document.getElementById("timeInput").value);
+        if (isNaN(time)) return;
+  
+        // --- Update user marker in overall ---
+        userLineOverall
+          .attr("x1", xScale(time))
+          .attr("x2", xScale(time))
+          .style("opacity", 1);
+  
+        // --- Build Age Histogram ---
+        ageSvg.selectAll("*").remove(); // clear
+        const ageFiltered = data
+          .filter(d => d.AgeOnRaceDay >= age - 2 && d.AgeOnRaceDay <= age + 2)
+          .map(d => d.OfficialTimeMin);
+        const binsAge = d3.bin().domain(xScale.domain()).thresholds(30)(ageFiltered);
+        const yScaleAge = d3.scaleLinear()
+          .domain([0, d3.max(binsAge, d => d.length) || 1]).nice()
+          .range([height - margin.bottom, margin.top]);
+  
+        ageSvg.append("g")
+          .attr("transform", `translate(0,${height - margin.bottom})`)
+          .call(d3.axisBottom(xScale)
+            .tickFormat(d => `${Math.floor(d / 60)}h${Math.round(d % 60)}`))
+          .selectAll("text")
+          .style("font-size", axisFontSize() + "px");
+  
+        ageSvg.append("g")
+          .attr("transform", `translate(${margin.left},0)`)
+          .call(d3.axisLeft(yScaleAge).tickFormat(d3.format(".0f")))
+          .selectAll("text")
+          .style("font-size", axisFontSize() + "px");
+  
+        ageSvg.selectAll("rect")
+          .data(binsAge)
+          .enter().append("rect")
+          .attr("x", d => xScale(d.x0))
+          .attr("y", d => yScaleAge(d.length))
+          .attr("width", d => Math.max(0, xScale(d.x1) - xScale(d.x0) - 1))
+          .attr("height", d => yScaleAge(0) - yScaleAge(d.length))
+          .attr("fill", "#4682b4");
+  
+        ageSvg.append(() => userLineAge.node());
+        userLineAge
+          .attr("x1", xScale(time))
+          .attr("x2", xScale(time))
+          .style("opacity", 1);
+  
+        // --- Rank placement ---
+        const sorted = [...overallTimes].sort((a, b) => a - b);
+        const rank = sorted.findIndex(t => t > time) + 1;
+        rankCircle
+          .attr("cx", rankScale(rank))
+          .style("opacity", 1);
+      });
+  
+      // --- Update axis font size when window resizes ---
+      window.addEventListener("resize", () => {
+        d3.selectAll(".axis text")
+          .style("font-size", axisFontSize() + "px");
+      });
+    });
+  </script>
+  
+
+</body>
+</html>
